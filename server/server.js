@@ -4,7 +4,6 @@ import { configDotenv } from "dotenv";
 import { testAI } from "./src/services/ai.service.js";
 
 configDotenv();
-testAI();
 
 connectTodb().then(() => {
   app.listen(3000, () => {
