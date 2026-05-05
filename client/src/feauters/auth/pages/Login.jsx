@@ -1,15 +1,20 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hook/useAuth'
+import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
 const Login = () => {
+const {user,loading} = useSelector(state=>state.auth)
+  const {handleLogin} = useAuth()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const navigate = useNavigate()
 
-  const handleChange = (e) => {
+  const handleChange =(e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
@@ -19,19 +24,15 @@ const Login = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault()
-    setError('')
-    setLoading(true)
-
-    try {
-      // Add your login API call here
-      console.log('Login form submitted:', formData)
-      // Example: const response = await loginUser(formData)
-    } catch (err) {
-      setError(err.message || 'An error occurred during login')
-    } finally {
-      setLoading(false)
-    }
+    console.log(formData)
+    await handleLogin(formData)
+    navigate("/")
   }
+
+// if(!loading && user){
+//   return <Navigate to="/"  replace/>
+// }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
@@ -46,11 +47,11 @@ const Login = () => {
           </div>
 
           {/* Error Message */}
-          {error && (
+          {/* {error && (
             <div className="mb-6 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
               {error}
             </div>
-          )}
+          )} */}
 
           {/* Form */}
           <form onSubmit={handleSubmitForm} className="space-y-5">

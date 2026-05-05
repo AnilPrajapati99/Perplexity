@@ -1,15 +1,17 @@
 import { useState } from 'react'
+import { useAuth } from '../hook/useAuth'
+import { useSelector } from 'react-redux'
+
 
 const Register = () => {
+ const {loading} =  useSelector(state=>state.auth)
+  const {handleRegister} = useAuth()
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   })
 
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -21,28 +23,7 @@ const Register = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault()
-    setError('')
-    setSuccess('')
-    setLoading(true)
-
-    try {
-      // Validate passwords match
-      if (formData.password.length < 6) {
-        throw new Error('Password must be at least 6 characters long')
-      }
-
-      // Add your registration API call here
-      console.log('Register form submitted:', formData)
-      // Example: const response = await registerUser(formData)
-      
-      setSuccess('Registration successful! Redirecting to login...')
-      // Redirect to login after 2 seconds
-      // setTimeout(() => window.location.href = '/login', 2000)
-    } catch (err) {
-      setError(err.message || 'An error occurred during registration')
-    } finally {
-      setLoading(false)
-    }
+    await handleRegister(formData)
   }
 
   return (
@@ -58,18 +39,18 @@ const Register = () => {
           </div>
 
           {/* Error Message */}
-          {error && (
+          {/* {error && (
             <div className="mb-6 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
               {error}
             </div>
-          )}
+          )} */}
 
           {/* Success Message */}
-          {success && (
+          {/* {success && (
             <div className="mb-6 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 text-sm">
               {success}
             </div>
-          )}
+          )} */}
 
           {/* Form */}
           <form onSubmit={handleSubmitForm} className="space-y-5">

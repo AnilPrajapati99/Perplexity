@@ -223,7 +223,7 @@ export async function HandleLogin(req, res) {
   res.status(200).json({
     message: "User Login Succesfully",
     success: true,
-    use: {
+    user: {
       id: user._id,
       username: user.username,
       email: user.email,
