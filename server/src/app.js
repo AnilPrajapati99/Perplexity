@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.routes.js";
 import cors from "cors";
 import morgan from "morgan";
+import chatRouter from "./routes/chat.routes.js";
 
 // ?Middleware
 export const app = express();
@@ -18,8 +19,11 @@ app.use(
   }),
 );
 
-// ?
+// ?Auth
 app.use("/api/auth", authRouter);
+
+// ?Chat Router
+app.use("/api/chats", chatRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is Running" });
