@@ -2,10 +2,18 @@ import "dotenv/config";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatMistralAI } from "@langchain/mistralai";
 import { response } from "express";
-import { HumanMessage, SystemMessage, AIMessage } from "langchain";
+import {
+  HumanMessage,
+  SystemMessage,
+  AIMessage,
+  tool,
+  createAgent,
+} from "langchain";
+import * as z from "zod";
+import { internetSearch } from "./internet.service.js";
 
 const geminiModel = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash-lite",
+  model: "gemini-flash-latest",
   apiKey: process.env.GOOGLE_API_KEY,
 });
 
@@ -14,20 +22,36 @@ const mistralModel = new ChatMistralAI({
   apiKey: process.env.MISTRAL_API_KEY,
 });
 
-console.log(process.env.GOOGLE_API_KEY);
+const searchInternetTool = tool(internetSearch, {
+  name: "search_internet",
+  description:
+    "Search the internet for current events, recent news, and real-time information that is not in your training data. Use this for anything time-sensitive.",
+  schema: z.object({
+    query: z
+      .string()
+      .describe("the search query to find information on the internet"),
+  }),
+});
+
+// ?create Agent
+
+const agent = createAgent({
+  model: geminiModel,
+  tools: [searchInternetTool],
+});
 
 export async function genrateRespose(messages) {
-  const response = await geminiModel.invoke(
-    messages.map((msg) => {
+  const response = await agent.invoke({
+    messages: messages.map((msg) => {
       console.log(msg);
-      if (msg.role == "user") {
+      if (msg.role === "user") {
         return new HumanMessage(msg.content);
-      } else if (msg.role == "ai") {
+      } else if (msg.role === "ai") {
         return new AIMessage(msg.content);
       }
     }),
-  );
-  return response.text;
+  });
+  return response.messages[response.messages.length - 1].text;
 }
 
 export async function genrateChatTitle(message) {

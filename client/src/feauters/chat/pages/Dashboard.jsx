@@ -27,16 +27,19 @@ const handleSubmitMessage = async () => {
     await handleSendMessage({
       message: inputValue,
       chatId: currentChatId,
-    });
 
+    });
+console.log("click")
     setInputValue("");
+
+
   } catch (error) {
     console.log(error);
   }
 };
 
 const openChat =async (chatId) => {
- await handleOpenChat(chatId)
+ await handleOpenChat(chatId,chats)
 }
 
   return (
