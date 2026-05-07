@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { Send } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { useChat } from '../hooks/useChat'
+import { MarkdownRenderer } from './MarkdownRenderer'
+import Aianimation from '../components/Aianimation'
 
 const Dashboard = () => {
   const { initialiseSocketConnection,handleSendMessage ,handleFetchChats,handleOpenChat} = useChat()
@@ -45,7 +47,7 @@ const openChat =async (chatId) => {
   return (
     <main className='h-screen w-full flex bg-neutral-900'>
       {/* Sidebar */}
-      <aside className='w-1/4 bg-neutral-800 border-r border-neutral-700 p-4 flex flex-col'>
+      <aside className='w-1/7 bg-neutral-800 border-r border-neutral-700 p-4 flex flex-col'>
         {/* Logo/Title */}
         <div className='mb-8'>
           <h1 className='text-2xl font-bold text-white'>Perplexity</h1>
@@ -77,7 +79,7 @@ const openChat =async (chatId) => {
   <div className='flex-1 overflow-y-auto'>
     
     {/* Content Wrapper */}
-    <div className='w-[80%] mx-auto  p-6 space-y-4'>
+    <div className='w-[60%] mx-auto  p-6 space-y-4'>
       {chats[currentChatId]?.messages?.map((message, index) => (
         <div
           key={index}
@@ -88,10 +90,10 @@ const openChat =async (chatId) => {
           }`}
         >
           <div
-            className={`max-w-xl px-4 py-3 rounded-lg ${
+            className={`px-4 py-3 rounded-[20px] ${
               message.role === "user"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-black"
+                ? "bg-[#1E1D1B] text-white"
+                : " text-white"
             }`}
           >
             {message.role === "user" ? (
@@ -99,23 +101,8 @@ const openChat =async (chatId) => {
                 {message.content}
               </p>
             ) : (
-              <div className='prose prose-sm max-w-none'>
-                <ReactMarkdown
-                  components={{
-                    pre: ({ children }) => (
-                      <pre className="whitespace-pre-wrap break-words overflow-hidden bg-gray-800 text-white p-4 rounded-lg">
-                        {children}
-                      </pre>
-                    ),
-                    code: ({ children }) => (
-                      <code className="whitespace-pre-wrap break-words">
-                        {children}
-                      </code>
-                    ),
-                  }}
-                >
-                  {message.content}
-                </ReactMarkdown>
+              <div style={{ maxWidth: 720 }}>
+                <MarkdownRenderer content={message.content} />
               </div>
             )}
           </div>
@@ -123,37 +110,26 @@ const openChat =async (chatId) => {
       ))}
     </div>
   </div>
-
+ {/* <Aianimation/> */}
   {/* Input */}
-<div className="p-6 mt-auto border-t border-neutral-700">
-  <div className="flex items-center gap-3">
+<div className="pb-6 mt-auto ">
+  <div className="flex flex-col  gap-8 w-[60%] mx-auto  border border-neutral-700 rounded-[20px] px-8 py-8">
     
-    <input
+    <div>
+      <input
       type="text"
-      placeholder="Chat input area"
+      placeholder="Ask me anything..."
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      className="
-        flex-1
-        px-4
-        py-3
-        bg-neutral-800
-        border
-        border-neutral-700
-        rounded-lg
-        text-white
-        placeholder-neutral-500
-        focus:outline-none
-        focus:border-blue-500
-        focus:ring-1
-        focus:ring-blue-500
-      "
+      className=" text-white bg-transparent focus:outline-none  text-2xl w-full placeholder-gray-500"
     />
+    </div>
 
-    <button
+    <div className='flex justify-end'>
+      <button
+      disabled={!inputValue.trim()}
       onClick={handleSubmitMessage}
-      className="
-        px-4
+      className={` px-4
         py-3
         bg-blue-600
         hover:bg-blue-700
@@ -165,10 +141,11 @@ const openChat =async (chatId) => {
         flex
         items-center
         justify-center
-      "
+        ${!inputValue.trim() ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
     >
       <Send size={20} />
     </button>
+    </div>
 
   </div>
 </div>
