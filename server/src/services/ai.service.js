@@ -19,6 +19,7 @@ console.log(process.env.GOOGLE_API_KEY);
 export async function genrateRespose(messages) {
   const response = await geminiModel.invoke(
     messages.map((msg) => {
+      console.log(msg);
       if (msg.role == "user") {
         return new HumanMessage(msg.content);
       } else if (msg.role == "ai") {

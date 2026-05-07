@@ -7,12 +7,14 @@ import messageModel from "../models/message.model.js";
 export async function sendMessage(req, res) {
   const { message, chat: chatId } = req.body;
 
-  console.log(chatId);
+  // console.log(message);
+
   let title = null,
     chat = null;
 
   if (!chatId) {
     title = await genrateChatTitle(message);
+    // console.log(title);
     chat = await chatModel.create({
       user: req.user.id,
       title,
@@ -23,7 +25,8 @@ export async function sendMessage(req, res) {
     content: message,
     role: "user",
   });
-  const messages = await messageModel.find({ chat: chatId });
+  const messages = await messageModel.find({ chat: chatId || chat._id });
+  console.log(messages);
   const result = await genrateRespose(messages);
 
   const aiMessage = await messageModel.create({
@@ -31,13 +34,13 @@ export async function sendMessage(req, res) {
     content: result,
     role: "ai",
   });
-  console.log(messages);
+  // console.log(messages);
 
   res.status(201).json({
     chatTitle: title,
-    AIMessage: result,
+    message: result,
     chat: chat,
-    message: aiMessage,
+    AIMessage: aiMessage,
   });
 }
 
