@@ -25,25 +25,28 @@ export const useChat = () => {
     const { AIMessage, chat } = data;
     console.log(data);
 
+    const resolvedChatId = chatId || chat?._id || AIMessage.chat;
+    console.log("resolve", resolvedChatId);
+
     if (!chatId) {
       dispatch(createNewChat({ chatId: chat._id, title: chat.title }));
     }
 
     dispatch(
       addNewMessage({
-        chatId: chatId || chat._id,
+        chatId: resolvedChatId,
         content: message,
         role: "user",
       }),
     );
     dispatch(
       addNewMessage({
-        chatId: chatId || chat._id,
+        chatId: resolvedChatId,
         content: AIMessage.content,
         role: AIMessage.role,
       }),
     );
-    dispatch(setCurrentChatId(chat._id));
+    dispatch(setCurrentChatId(resolvedChatId));
   }
 
   async function handleFetchChats() {

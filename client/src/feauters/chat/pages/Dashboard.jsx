@@ -5,16 +5,19 @@ import ReactMarkdown from 'react-markdown'
 import { useChat } from '../hooks/useChat'
 import { MarkdownRenderer } from './MarkdownRenderer'
 import Aianimation from '../components/Aianimation'
+import { setEmptyChat } from '../chat.slice'
+import { useDispatch } from 'react-redux'
+import Userdetailse from '../components/Userdetailse'
 
 const Dashboard = () => {
+  const {user} = useSelector(state => state.auth)
   const { initialiseSocketConnection,handleSendMessage ,handleFetchChats,handleOpenChat} = useChat()
   const { chats ,currentChatId} = useSelector((state) => state.chat)
 const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
 
 
-  console.log(chats)
-
+const dispatch = useDispatch()
   
 
   useEffect(() => {
@@ -24,18 +27,22 @@ const [messages, setMessages] = useState([])
 
 const handleSubmitMessage = async () => {
   if (!inputValue.trim()) return;
+  const inputMessaege = inputValue
+  setInputValue("")
 
   try {
     await handleSendMessage({
-      message: inputValue,
+      message: inputMessaege,
       chatId: currentChatId,
 
     });
 console.log("click")
-    setInputValue("");
+setInputValue("");
+   
 
 
   } catch (error) {
+    setInputValue(inputMessaege);
     console.log(error);
   }
 };
@@ -44,15 +51,28 @@ const openChat =async (chatId) => {
  await handleOpenChat(chatId,chats)
 }
 
+function handleNewchat() {
+  setInputValue("")
+  dispatch(setEmptyChat())
+}
+
+
   return (
-    <main className='h-screen w-full flex bg-neutral-900'>
+    <main className='main2 h-screen w-screen flex bg-neutral-900'>
       {/* Sidebar */}
-      <aside className='w-1/7 bg-neutral-800 border-r border-neutral-700 p-4 flex flex-col'>
+      <aside className='w-1/7  bg-neutral-800 border-r border-neutral-700  flex  flex-col'>
         {/* Logo/Title */}
-        <div className='mb-8'>
+
+        <div className='p-4'>
+                  <div className='mb-5'>
           <h1 className='text-2xl font-bold text-white'>Perplexity</h1>
         </div>
 
+        {/* New Chat Button */}
+
+       <button onClick={handleNewchat} className='w-full mb-5 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white font-semibold transition-all duration-200 mt-4'>
+          + New Chat
+        </button>
         {/* Chat History */}
         <div className='flex-1 overflow-y-auto space-y-3'>
           {Object.values(chats).map((chat, index) => (
@@ -65,41 +85,45 @@ const openChat =async (chatId) => {
             </button>
           ))}
         </div>
+        </div>
 
-        {/* New Chat Button */}
-        <button className='w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white font-semibold transition-all duration-200 mt-4'>
-          + New Chat
-        </button>
+
+          {/* user details */}
+          <Userdetailse user={user}/>
       </aside>
 
+
+
+
       {/* Main Chat Area */}
-<section className='flex-1 flex flex-col'>
+<section className='flex-1 flex flex-col '>
 
   {/* Scroll Area */}
-  <div className='flex-1 overflow-y-auto'>
+  <div className='main flex-1 overflow-y-auto'>
     
     {/* Content Wrapper */}
-    <div className='w-[60%] mx-auto  p-6 space-y-4'>
+
+    <div className='max-w-4xl mx-auto p-8  space-y-4 '>
       {chats[currentChatId]?.messages?.map((message, index) => (
         <div
           key={index}
           className={`flex ${
             message.role === "user"
-              ? "justify-end"
+              ? "justify-end "
               : "justify-start"
           }`}
         >
           <div
-            className={`px-4 py-3 rounded-[20px] ${
+            className={` py-3 rounded-[20px] ${
               message.role === "user"
                 ? "bg-[#1E1D1B] text-white"
                 : " text-white"
             }`}
           >
             {message.role === "user" ? (
-              <p className='whitespace-pre-wrap break-words'>
+              <h2 className='whitespace-pre-wrap px-5  wrap-break-words'>
                 {message.content}
-              </p>
+              </h2>
             ) : (
               <div style={{ maxWidth: 720 }}>
                 <MarkdownRenderer content={message.content} />
@@ -110,20 +134,26 @@ const openChat =async (chatId) => {
       ))}
     </div>
   </div>
- {/* <Aianimation/> */}
-  {/* Input */}
-<div className="pb-6 mt-auto ">
-  <div className="flex flex-col  gap-8 w-[60%] mx-auto  border border-neutral-700 rounded-[20px] px-8 py-8">
+
+
+
+<div className="pb-6 px-8  mt-auto  ">
+  <div className="flex  pb-6 mt-auto flex-col mx-auto gap-8  max-w-4xl  border border-neutral-700 rounded-[20px] px-8 py-8">
     
+
+      {/* Input Style */}
+
     <div>
       <input
       type="text"
       placeholder="Ask me anything..."
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      className=" text-white bg-transparent focus:outline-none  text-2xl w-full placeholder-gray-500"
+      className=" text-white bg-transparent focus:outline-none  text-2xl placeholder-gray-500"
     />
     </div>
+
+      {/* Button Style */}
 
     <div className='flex justify-end'>
       <button

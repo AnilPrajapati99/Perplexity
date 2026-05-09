@@ -38,3 +38,7 @@ export async function getMe() {
     throw error;
   }
 }
+
+export async function logOut() {
+  await api.post("/logout");
+}
