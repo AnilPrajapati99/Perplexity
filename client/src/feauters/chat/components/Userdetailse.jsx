@@ -17,13 +17,13 @@ const navigate = useNavigate()
 }
 
   return (
-<div className="flex items-center justify-between mt-auto px-4  py-3 border-t border-neutral-700">
+<div className=" flex items-center justify-between mt-auto px-3 md:px-3 xl:px-4  py-3 border-t border-neutral-700">
   {/* Left side - Avatar + Info */}
   <div className="flex items-center gap-3">
     <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold">
       {user?.username?.charAt(0)}
     </div>
-    <div>
+    <div className=''>
       <p className="text-white font-medium text-sm">{user?.username}</p>
       <p className="text-gray-400 text-xs">{user?.email}</p>
     </div>

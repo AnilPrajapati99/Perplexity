@@ -87,12 +87,20 @@ const T = {
   inlineCode: {
     fontFamily: "'Fira Code','Cascadia Code','Consolas',monospace",
     fontSize: "0.8em", background: "#1a2332", color: "#f97316",
+      overflowWrap: "break-word",
+  wordBreak: "break-word",
+  whiteSpace: "pre-wrap",
+  display: "inline-block",
+maxWidth: "100%",
     padding: "0.12em 0.42em", borderRadius: "4px",
-    border: "1px solid #2a3a4a", fontWeight: 400,
+    border: "1px solid #2a3a4a", fontWeight: 200,
   },
 
   // code block
   codeWrap: {
+    overflowWrap: "break-word",
+  wordBreak: "break-word",
+  whiteSpace: "pre-wrap",
     borderRadius: "8px", overflow: "hidden",
     border: "1px solid #30363d", margin: "0.85rem 0",
   },

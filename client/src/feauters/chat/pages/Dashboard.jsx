@@ -60,7 +60,7 @@ function handleNewchat() {
   return (
     <main className='main2 h-screen w-screen flex bg-neutral-900'>
       {/* Sidebar */}
-      <aside className='w-1/7  bg-neutral-800 border-r border-neutral-700  flex  flex-col'>
+      <aside className='hidden  bg-neutral-800 border-r border-neutral-700  md:flex  flex-col md:w-1/4 lg:w-1/5 xl:w-1/5 2xl:w-1/7'>
         {/* Logo/Title */}
 
         <div className='p-4'>
@@ -96,14 +96,14 @@ function handleNewchat() {
 
 
       {/* Main Chat Area */}
-<section className='flex-1 flex flex-col '>
+<section className='flex-1 flex flex-col w-screen'>
 
   {/* Scroll Area */}
   <div className='main flex-1 overflow-y-auto'>
     
     {/* Content Wrapper */}
 
-    <div className='max-w-4xl mx-auto p-8  space-y-4 '>
+    <div className='max-w-2xl md:max-w-4xl mx-auto p-8  space-y-4 '>
       {chats[currentChatId]?.messages?.map((message, index) => (
         <div
           key={index}
@@ -125,7 +125,7 @@ function handleNewchat() {
                 {message.content}
               </h2>
             ) : (
-              <div style={{ maxWidth: 720 }}>
+              <div className='w-112.5 md:w-180'>
                 <MarkdownRenderer content={message.content} />
               </div>
             )}
@@ -137,8 +137,8 @@ function handleNewchat() {
 
 
 
-<div className="pb-6 px-8  mt-auto  ">
-  <div className="flex  pb-6 mt-auto flex-col mx-auto gap-8  max-w-4xl  border border-neutral-700 rounded-[20px] px-8 py-8">
+<div className="pb-6  px-4  mt-auto ">
+  <div className="flex  pb-6 mt-auto flex-col max-w-4xl mx-auto gap-5 md:gap-8   border border-neutral-700 rounded-[20px] px-5 md:px-8 py-6 md:py-8">
     
 
       {/* Input Style */}
