@@ -9,6 +9,7 @@ import { setEmptyChat } from '../chat.slice'
 import { useDispatch } from 'react-redux'
 import Userdetailse from '../components/Userdetailse'
 import { ArrowRightToLine } from 'lucide-react';
+import { Brain } from 'lucide-react';
 
 const Dashboard = () => {
   const {user} = useSelector(state => state.auth)
@@ -20,7 +21,7 @@ const [messages, setMessages] = useState([])
   const [showSidebar,setSidebar] = useState(false)
   const [open, setOpen] = useState(false)
 
-
+console.log(chats)
 
 const dispatch = useDispatch()
   
@@ -81,7 +82,8 @@ function handleNewchat() {
 
         <div className='px-4 py-2 md:py-4'>
         <div className='mb-5 flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-white'>Perplexity</h1>
+          <h1 className='text-2xl font-bold text-white hidden md:block'>PromptIQ</h1>
+          <h2 className='md:hidden'><Brain color='white' size={30} /></h2>
 <div onClick={()=>setSidebar(false)} className='transition-all ease-in-out duration-200 hover:bg-gray-800 w-fit rounded-xl p-2 block md:hidden' >
     <ArrowRightToLine  className={`transition-transform duration-300 ${open ? "rotate-0" : "rotate-180"}`}   color='white' size={30} />
   </div>
@@ -131,6 +133,9 @@ function handleNewchat() {
     {/* Content Wrapper */}
 
     <div className='max-w-screen   sm:max-w-screen md:max-w-2xl lg:max-w-screen xl:max-w-4xl 2xl:max-w-4xl mx-auto p-8  space-y-4 '>
+      {!chats[currentChatId]?.messages ? <>
+      
+      </> : ""}
       {chats[currentChatId]?.messages?.map((message, index) => (
         <div
           key={index}
