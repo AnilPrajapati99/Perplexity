@@ -96,14 +96,14 @@ function handleNewchat() {
 
 
       {/* Main Chat Area */}
-<section className='flex-1 flex flex-col w-screen'>
+<section className='flex-1 flex flex-col '>
 
   {/* Scroll Area */}
-  <div className='main flex-1 overflow-y-auto'>
+  <div className='main overflow-y-auto'>
     
     {/* Content Wrapper */}
 
-    <div className='max-w-2xl md:max-w-4xl mx-auto p-8  space-y-4 '>
+    <div className='max-w-screen   sm:max-w-screen md:max-w-2xl lg:max-w-screen xl:max-w-4xl 2xl:max-w-4xl mx-auto p-8  space-y-4 '>
       {chats[currentChatId]?.messages?.map((message, index) => (
         <div
           key={index}
@@ -114,18 +114,18 @@ function handleNewchat() {
           }`}
         >
           <div
-            className={` py-3 rounded-[20px] ${
+            className={` py-3 rounded-[20px] max-w-[min(100%,42rem)] break-words  ${
               message.role === "user"
                 ? "bg-[#1E1D1B] text-white"
                 : " text-white"
             }`}
           >
             {message.role === "user" ? (
-              <h2 className='whitespace-pre-wrap px-5  wrap-break-words'>
+              <h2 className='whitespace-pre-wrap px-5  overflow-wrap-anywhere '>
                 {message.content}
               </h2>
             ) : (
-              <div className='w-112.5 md:w-180'>
+              <div className='w-full  min-w-0'>
                 <MarkdownRenderer content={message.content} />
               </div>
             )}
@@ -136,9 +136,8 @@ function handleNewchat() {
   </div>
 
 
-
 <div className="pb-6  px-4  mt-auto ">
-  <div className="flex  pb-6 mt-auto flex-col max-w-4xl mx-auto gap-5 md:gap-8   border border-neutral-700 rounded-[20px] px-5 md:px-8 py-6 md:py-8">
+  <div className="flex  pb-6 mt-auto flex-col max-w-4xl sm:max-w-screen mx-auto gap-5 md:gap-8   border border-neutral-700 rounded-[20px] px-5 md:px-8 py-6 md:py-8 md:max-w-3xl xl:max-w-4xl 2xl:max-w-4xl">
     
 
       {/* Input Style */}
@@ -179,6 +178,7 @@ function handleNewchat() {
 
   </div>
 </div>
+
 
 </section>
     </main>

@@ -5,11 +5,18 @@
 
 @import "tailwindcss";
 
+
+*,html,body{
+  box-sizing: border-box;
+}
+
 .main {
     &::-webkit-scrollbar {
     display: none;
   }
 }
+
+
 
 .grid-bg {
   position: absolute;

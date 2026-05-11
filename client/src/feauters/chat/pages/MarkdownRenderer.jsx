@@ -97,13 +97,13 @@ maxWidth: "100%",
   },
 
   // code block
-  codeWrap: {
-    overflowWrap: "break-word",
-  wordBreak: "break-word",
-  whiteSpace: "pre-wrap",
-    borderRadius: "8px", overflow: "hidden",
-    border: "1px solid #30363d", margin: "0.85rem 0",
-  },
+codeWrap: {
+  overflowWrap: "break-word",     // "pre" nahi, "pre-wrap" chahiye
+  borderRadius: "8px",
+  overflow: "hidden",          // "hidden" se "auto" karo scroll ke liye
+  border: "1px solid #30363d",
+  margin: "0.85rem 0",
+},
   codeHeader: {
     display: "flex", justifyContent: "space-between", alignItems: "center",
     background: "#1f1f1f", padding: "5px 14px",
@@ -182,8 +182,13 @@ function CodeBlock({ lang, code }) {
         showLineNumbers={lines > 3}
         customStyle={{
           margin: 0, borderRadius: 0,
-          fontSize: "0.95rem", lineHeight: "1.65",fontWeight: 300,
+          fontSize: "clamp(0.65rem, 1vw, 1rem)", lineHeight: "1.65",fontWeight: 500,
           background: "#1e1e1e", padding: "0.95rem 1.1rem",
+          whiteSpace: "pre",
+    // wordBreak: "break-all",
+    // overflowWrap: "break-word",
+    overflowX: "auto",
+          
         }}
         codeTagProps={{
           style: { fontFamily: " 'JetBrains Mono', 'Fira Code','Cascadia Code','Consolas',monospace" },
