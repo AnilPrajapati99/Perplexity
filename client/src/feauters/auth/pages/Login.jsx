@@ -38,7 +38,7 @@ const {user,loading} = useSelector(state=>state.auth)
     <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
       <div className='grid-bg'></div>
       <div className="w-full max-w-md">
-        <div className="bg-slate-800 rounded-lg shadow-2xl p-8 border border-slate-700">
+        <div className="bg-slate-850 rounded-lg shadow-2xl p-8 border border-slate-700">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-red-500 via-red-600 to-rose-500 bg-clip-text text-transparent">

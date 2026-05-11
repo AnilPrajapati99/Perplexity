@@ -17,7 +17,7 @@ const navigate = useNavigate()
 }
 
   return (
-<div className=" flex items-center justify-between mt-auto px-3 md:px-3 xl:px-4  py-3 border-t border-neutral-700">
+<div className=" mt-auto flex items-center justify-between  px-3 md:px-3 xl:px-4  py-3 border-t border-neutral-700">
   {/* Left side - Avatar + Info */}
   <div className="flex items-center gap-3">
     <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-bold">
