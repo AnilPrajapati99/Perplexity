@@ -21,24 +21,33 @@ export const useChat = () => {
 
   async function handleSendMessage({ message, chatId }) {
     dispatch(setIsLoading(true));
+
+    if (chatId) {
+      dispatch(
+        addNewMessage({
+          chatId: chatId,
+          content: message,
+          role: "user",
+        }),
+      );
+    }
+
     const data = await sendMessage({ message, chatId });
     const { AIMessage, chat } = data;
-    console.log(data);
 
     const resolvedChatId = chatId || chat?._id || AIMessage.chat;
-    console.log("resolve", resolvedChatId);
 
     if (!chatId) {
       dispatch(createNewChat({ chatId: chat._id, title: chat.title }));
+      dispatch(
+        addNewMessage({
+          chatId: resolvedChatId,
+          content: message,
+          role: "user",
+        }),
+      );
     }
 
-    dispatch(
-      addNewMessage({
-        chatId: resolvedChatId,
-        content: message,
-        role: "user",
-      }),
-    );
     dispatch(
       addNewMessage({
         chatId: resolvedChatId,
@@ -46,7 +55,9 @@ export const useChat = () => {
         role: AIMessage.role,
       }),
     );
+
     dispatch(setCurrentChatId(resolvedChatId));
+    dispatch(setIsLoading(false));
   }
 
   async function handleFetchChats() {

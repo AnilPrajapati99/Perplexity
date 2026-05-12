@@ -18,7 +18,7 @@ const Sidebar = ({openChat,handleNewchat}) => {
     w-[60%] sm:w-1/2
     ${showSidebar ? "translate-x-0" : "-translate-x-full"}
     md:translate-x-0 md:static
-    md:flex md:w-1/3 lg:w-1/5 xl:w-1/5 2xl:w-1/7
+    md:flex md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/7
   `}
 >
         {/* Logo/Title */}
