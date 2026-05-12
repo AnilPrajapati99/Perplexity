@@ -7,7 +7,9 @@ export const chatSlice = createSlice({
     currentChatId: null,
     isLoading: false,
     error: null,
-    value:null
+    value: null,
+    activeTab: "",
+    showSidebar: false,
   },
   reducers: {
     createNewChat: (state, action) => {
@@ -45,7 +47,13 @@ export const chatSlice = createSlice({
     },
     setEmptyChat: (state) => {
       state.currentChatId = null;
-    }
+    },
+    setActiveTab: (state, action) => {
+      state.activeTab = action.payload;
+    },
+    setSidebar: (state, action) => {
+      state.showSidebar = action.payload;
+    },
   },
 });
 
@@ -58,6 +66,8 @@ export const {
   addNewMessage,
   addMessages,
   setEmptyChat,
+  setActiveTab,
+  setSidebar,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

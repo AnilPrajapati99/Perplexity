@@ -30,7 +30,7 @@ const navigate = useNavigate()
   </div>
 
   {/* Right side - Logout */}
-  <button onClick={logout} className="text-white text-sm hover:text-red-400 active:scale-95 transition">
+  <button onClick={logout} className="cursor-pointer text-white text-sm hover:text-red-400 active:scale-95 transition">
    <LogOut size={20} />
   </button>
 
