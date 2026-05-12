@@ -34,7 +34,7 @@ const Sidebar = ({openChat,handleNewchat}) => {
 
         {/* New Chat Button */}
 
-       <button onClick={handleNewchat} className='cursor-pointer w-full mb-5 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white font-semibold transition-all duration-200 mt-4'>
+       <button onClick={handleNewchat} className='cursor-pointer w-full mb-5 px-4 py-3 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-white font-semibold transition-all duration-200 mt-4'>
           + New Chat
         </button>
         {/* Chat History */}
