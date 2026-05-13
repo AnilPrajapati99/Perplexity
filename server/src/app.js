@@ -23,12 +23,13 @@ app.use(
       "http://127.0.0.1:5500", // Live Server
       "http://localhost:5500", // Live Server alternate
       "http://localhost:4173", // Live Server alternate
-      process.env.FRONTEND_URL, // Render production URL
+      process.env.FRONTEND_URL,
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
+console.log(process.env.FRONTEND_URL);
 app.use(express.static(path.join(__dirname, "../public")));
 
 // API Routes
