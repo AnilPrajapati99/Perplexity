@@ -1,9 +1,8 @@
+import "dotenv/config";
 import { app } from "./src/app.js";
 import { connectTodb } from "./src/config/db.js";
-import { configDotenv } from "dotenv";
 import http from "http";
 import { initSocket } from "./src/socket/server.socket.js";
-configDotenv();
 
 const httpServer = http.createServer(app);
 initSocket(httpServer);
