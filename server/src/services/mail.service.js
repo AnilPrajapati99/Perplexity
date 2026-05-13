@@ -1,34 +1,38 @@
 import "dotenv/config";
 import nodemailer from "nodemailer";
+import { google } from "googleapis";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "OAuth2",
-    user: process.env.GOOGLE_USER,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-    clientId: process.env.GOOGLE_CLIENT_ID,
-  },
-});
+const OAuth2 = google.auth.OAuth2;
 
-console.log({
-  user: process.env.GOOGLE_USER,
-  clientId: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET ? "✓ set" : "✗ missing",
-  refreshToken: process.env.GOOGLE_REFRESH_TOKEN ? "✓ set" : "✗ missing",
-});
+async function createTransporter() {
+  const oauth2Client = new OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    "https://developers.google.com/oauthplayground",
+  );
 
-transporter
-  .verify()
-  .then(() => {
-    console.log("Email tranporter is ready to send email");
-  })
-  .catch((err) => {
-    console.error("Email transporter verification failed", err.message);
+  oauth2Client.setCredentials({
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   });
 
+  const accessToken = await oauth2Client.getAccessToken();
+
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: process.env.GOOGLE_USER,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+      accessToken: accessToken.token, // ← fresh token every time
+    },
+  });
+}
+
 export async function sendEmail({ to, subject, html, text }) {
+  const transporter = await createTransporter(); // ← create fresh transporter
+
   const mailOption = {
     from: process.env.GOOGLE_USER,
     to,
@@ -36,6 +40,7 @@ export async function sendEmail({ to, subject, html, text }) {
     html,
     text,
   };
+
   const details = await transporter.sendMail(mailOption);
-  console.log("Email details", details);
+  console.log("Email sent:", details.messageId);
 }
