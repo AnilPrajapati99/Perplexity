@@ -4,7 +4,6 @@ import { Send } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { useChat } from '../hooks/useChat'
 import { MarkdownRenderer } from './MarkdownRenderer'
-import Aianimation from '../components/Aianimation'
 import { setEmptyChat } from '../chat.slice'
 import { useDispatch } from 'react-redux'
 import { ArrowRightToLine } from 'lucide-react';
@@ -100,7 +99,7 @@ function handleNewchat() {
           }`}
         >
           <div
-            className={` py-3 rounded-[20px] max-w-[min(100%,42rem)] break-words  ${
+            className={` py-3 rounded-[20px] max-w-[min(100%,42rem)] wrap-break-word  ${
               message.role === "user"
                 ? "bg-[#1E1D1B] text-white"
                 : " text-white"

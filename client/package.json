@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vite build && rmdir /S /Q ..\\server\\public && xcopy /E /I /Y dist ..\\server\\public\\"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.19.1",

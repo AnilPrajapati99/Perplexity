@@ -4,27 +4,40 @@ import authRouter from "./routes/auth.routes.js";
 import cors from "cors";
 import morgan from "morgan";
 import chatRouter from "./routes/chat.routes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// ?Middleware
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173", // Vite dev server
+      "http://127.0.0.1:5500", // Live Server
+      "http://localhost:5500", // Live Server alternate
+      "http://localhost:4173", // Live Server alternate
+      process.env.FRONTEND_URL, // Render production URL
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
 
-// ?Auth
-app.use("/api/auth", authRouter);
+app.use(express.static(path.join(__dirname, "../public")));
 
-// ?Chat Router
+// API Routes
+app.use("/api/auth", authRouter);
 app.use("/api/chats", chatRouter);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Server is Running" });
+//  React Static Files
+
+app.get("{*path}", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
 });

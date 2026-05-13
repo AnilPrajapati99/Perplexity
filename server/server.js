@@ -3,10 +3,10 @@ import { connectTodb } from "./src/config/db.js";
 import { configDotenv } from "dotenv";
 import http from "http";
 import { initSocket } from "./src/socket/server.socket.js";
+configDotenv();
 
 const httpServer = http.createServer(app);
 initSocket(httpServer);
-configDotenv();
 
 const PORT = process.env.PORT;
 
