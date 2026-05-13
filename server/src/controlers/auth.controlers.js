@@ -2,48 +2,16 @@ import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/mail.service.js";
 
-// export async function handleRegister(req, res) {
-//   console.log("controler");
-//   const { username, email, password } = req.body;
-
-//   const isUseralreadyExits = await userModel.findOne({
-//     $or: [{ username }, { email }],
-//   });
-
-//   if (isUseralreadyExits) {
-//     return res.status(400).json({
-//       message: "User is already exists",
-//       success: false,
-//       err: "User alredy Exists",
-//     });
-//   }
-
-//   const user = await userModel.create({
-//     username,
-//     email,
-//     password,
-//   });
-
-//   await sendEmail({
-//     to: email,
-//     subject: "Welcome to Perplexity",
-//     html: `<p>${username} </p> <br> <p>Thankouy for Registering</p>`,
-//   });
-
-//   res.status(200).json({
-//     message: "User REgister Succesfull",
-//     success: true,
-//     user: {
-//       id: user._id,
-//       username: user.username,
-//       email: user.email,
-//     },
-//   });
-// }
-
 export async function handleRegister(req, res) {
   try {
     console.log("controller");
+
+    console.log("ENV CHECK:", {
+      user: process.env.GOOGLE_USER ? "✓" : "✗ MISSING",
+      clientId: process.env.GOOGLE_CLIENT_ID ? "✓" : "✗ MISSING",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ? "✓" : "✗ MISSING",
+      refreshToken: process.env.GOOGLE_REFRESH_TOKEN ? "✓" : "✗ MISSING",
+    });
 
     const { username, email, password } = req.body;
 
@@ -132,8 +100,10 @@ export async function handleRegister(req, res) {
       },
     });
   } catch (err) {
+    console.error("Registration error:", err.message);
     return res.status(500).json({
       message: "An error occurred during registration",
+      error: err.message,
     });
   }
 }
