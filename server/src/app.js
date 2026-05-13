@@ -29,7 +29,6 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   }),
 );
-
 app.use(express.static(path.join(__dirname, "../public")));
 
 // API Routes

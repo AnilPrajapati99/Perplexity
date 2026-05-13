@@ -101,7 +101,7 @@ export async function handleRegister(req, res) {
                 <p style="font-size: 15px; color: #555;">
                   Please Verify your email address by clicking the below:
                 </p>
-                  <a href="http://localhost:3000/api/auth/verify-email?token=${emailVerfificationtoken}">Verify</a>
+                  <a href="https://promptiq-ekow.onrender.com/api/auth/verify-email?token=${emailVerfificationtoken}">Verify</a>
                 <p style="font-size: 15px; color: #555;">
                   You can now explore all features and get started right away.
                 </p>
@@ -160,7 +160,7 @@ export async function verifyEmail(req, res) {
     const html = `
   <h1>Email Verified Successfully</h1>
     <p>Your Email has been verifed.You can now log in to your account</p>
-    <a href="http://localhost:3000/api/auth/login">Go to Login</a>
+    <a href="https://promptiq-ekow.onrender.com/api/auth/login">Go to Login</a>
   `;
 
     return res.send(html);
