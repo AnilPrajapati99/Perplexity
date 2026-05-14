@@ -1,20 +1,25 @@
-import SibApiV3Sdk from "sib-api-v3-sdk";
-
-const defaultClient = SibApiV3Sdk.ApiClient.instance;
-const apiKey = defaultClient.authentications["api-key"];
-apiKey.apiKey = process.env.BREVO_API_KEY;
-
-const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-
 export async function sendEmail({ to, subject, html, text }) {
-  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "api-key": process.env.BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: "PromptIQ", email: process.env.BREVO_SENDER },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+      textContent: text,
+    }),
+  });
 
-  sendSmtpEmail.sender = { name: "PromptIQ", email: process.env.BREVO_SENDER };
-  sendSmtpEmail.to = [{ email: to }];
-  sendSmtpEmail.subject = subject;
-  sendSmtpEmail.htmlContent = html;
-  sendSmtpEmail.textContent = text;
+  const data = await response.json();
 
-  const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
-  console.log("Email sent:", result.messageId);
+  if (!response.ok) {
+    console.error("Email error:", data);
+    throw new Error(data.message || "Email sending failed");
+  }
+
+  console.log("Email sent:", data.messageId);
 }
