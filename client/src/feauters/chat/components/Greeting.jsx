@@ -25,11 +25,11 @@ const [prompt] = useState(() => getRandomPrompt())
 
 
   return (
- <div className="h-120 flex flex-col items-center justify-center gap-2">
+ <div  className="flex  flex-col items-center justify-center gap-2">
   <h1 className="text-3xl font-bold text-white">
     Hi, {user?.username} 👋
   </h1>
-  <p className="text-neutral-400 text-xl">
+  <p className="text-neutral-400 text-xl text-center">
     {prompt}
   </p>
 </div>

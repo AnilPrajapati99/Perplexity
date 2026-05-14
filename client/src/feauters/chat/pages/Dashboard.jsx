@@ -53,6 +53,7 @@ setInputValue("");
 };
 
 const openChat =async (chatId,title) => {
+  console.log("chatc",chatId)
  await handleOpenChat(chatId,chats)
  dispatch(setActiveTab(title))
 }
@@ -65,7 +66,7 @@ function handleNewchat() {
 
 
   return (
-    <main className='main2 h-screen w-screen flex bg-neutral-900'>
+    <main style={{height:"100dvh"}} className='main2 h-screen w-screen flex bg-neutral-900'>
 
       {/* Sidebar */}
      
@@ -82,13 +83,15 @@ function handleNewchat() {
 
 
   {/* Scroll Area */}
-  <div className='main overflow-y-auto'>
+  <div  className='relative flex-1 main  overflow-y-auto'>
     
     {/* Content Wrapper */}
 
-    <div className='max-w-screen   sm:max-w-screen md:max-w-2xl lg:max-w-screen xl:max-w-4xl 2xl:max-w-4xl mx-auto p-8  space-y-4 '>
-      {!chats[currentChatId]?.messages ? 
+    <div className=' max-w-screen   sm:max-w-screen md:max-w-2xl lg:max-w-screen xl:max-w-4xl 2xl:max-w-4xl mx-auto p-8  space-y-4 '>
+      <div className='absolute inset-0 w-full flex items-center justify-center '>
+        {!chats[currentChatId]?.messages ? 
       <Greeting/> : ""}
+      </div>
       {chats[currentChatId]?.messages?.map((message, index) => (
         <div
           key={index}

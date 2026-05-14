@@ -54,6 +54,10 @@ export const chatSlice = createSlice({
     setSidebar: (state, action) => {
       state.showSidebar = action.payload;
     },
+    deleteChat: (state, action) => {
+      const chatid = action.payload;
+      delete state.chats[chatid];
+    },
   },
 });
 
@@ -68,6 +72,7 @@ export const {
   setEmptyChat,
   setActiveTab,
   setSidebar,
+  deleteChat,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

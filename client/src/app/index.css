@@ -27,3 +27,26 @@ body{
   background-size:  60px 60px ;
   pointer-events: none;
 }
+
+/* index.css mein add karo */
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* thumb */
+::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 10px;
+}
+
+/* thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777171;
+}
