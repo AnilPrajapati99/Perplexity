@@ -4,6 +4,7 @@ import Register from "../feauters/auth/pages/Register";
 import Dashboard from "../feauters/chat/pages/Dashboard";
 import Protected from "../feauters/auth/components/Protected";
 import PublicProtected from "../feauters/auth/components/PublicProtected";
+import VerifyEmail from "../feauters/auth/components/VerifyEmail";
 
 export const router = createBrowserRouter([
   {
@@ -22,4 +23,8 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <PublicProtected><Register /></PublicProtected>,
   },
+  {
+    path:"/verify-email",
+    element:<VerifyEmail/>
+  }
 ]);

@@ -34,51 +34,45 @@ export async function handleRegister(req, res) {
 
     await sendEmail({
       to: email,
-      subject: "Welcome to Perplexity",
-      html: ` <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-    
-    <table width="100%" cellspacing="0" cellpadding="0">
-      <tr>
-        <td align="center">
-          
-          <table width="600" style="background: #ffffff; padding: 30px; border-radius: 8px;">
-            
-            <tr>
-              <td align="center">
-                <h2 style="color: #333;">Welcome to Perplexity 🚀</h2>
-              </td>
-            </tr>
+      subject: "Verify your email — PromptIQ",
+      html: `
+  <div style="background:#f4f6fb;padding:40px 20px;">
+    <div style="max-width:580px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:0.5px solid #e0e0e0;">
+      
+      <div style="background:#1a56db;padding:36px 40px 28px;text-align:center;">
+        <span style="color:#ffffff;font-size:20px;font-weight:500;">PromptIQ</span>
+      </div>
 
-            <tr>
-              <td>
-                <p style="font-size: 16px; color: #555;">
-                  Hi <strong>${username}</strong>,
-                </p>
+      <div style="padding:40px 40px 32px;">
+        <h1 style="font-size:22px;font-weight:500;color:#111827;text-align:center;margin:0 0 8px;">Verify your email address</h1>
+        <p style="font-size:15px;color:#6b7280;text-align:center;margin:0 0 28px;">Welcome to PromptIQ! Please confirm your email to get started.</p>
 
-                <p style="font-size: 15px; color: #555;">
-                  Thank you for registering with us. We're excited to have you on board!
-                </p>
-                <p style="font-size: 15px; color: #555;">
-                  Please Verify your email address by clicking the below:
-                </p>
-                  <a href="https://promptiq-ekow.onrender.com/api/auth/verify-email?token=${emailVerfificationtoken}">Verify</a>
-                <p style="font-size: 15px; color: #555;">
-                  You can now explore all features and get started right away.
-                </p>
+        <div style="background:#f9fafb;border-radius:10px;padding:24px;margin-bottom:28px;border:0.5px solid #e5e7eb;">
+          <p style="font-size:15px;color:#374151;margin:0 0 6px;">Hi <strong>${username}</strong>,</p>
+          <p style="font-size:15px;color:#6b7280;margin:0;line-height:1.7;">Thanks for signing up. Click the button below to verify your email and activate your account.</p>
+        </div>
 
-                <br>
-                <p style="font-size: 13px; color: #999;">
-                  If you have any questions, feel free to reply to this email.
-                </p>
-              </td>
-            </tr>
+        <div style="text-align:center;margin-bottom:32px;">
+          <a href="https://promptiq-ekow.onrender.com/api/auth/verify-email?token=${emailVerfificationtoken}" 
+             style="display:inline-block;background:#1a56db;color:#ffffff;text-decoration:none;font-size:15px;font-weight:500;padding:14px 40px;border-radius:8px;">
+            Verify email address
+          </a>
+          <p style="font-size:13px;color:#9ca3af;margin:16px 0 0;">This link expires in 24 hours.</p>
+        </div>
 
-          </table>
+        <div style="border-top:0.5px solid #e5e7eb;padding-top:24px;">
+          <p style="font-size:13px;color:#9ca3af;margin:0 0 8px;">If you didn't create an account, you can safely ignore this email.</p>
+          <p style="font-size:12px;color:#1a56db;margin:6px 0 0;word-break:break-all;">
+            https://promptiq-ekow.onrender.com/api/auth/verify-email?token=${emailVerfificationtoken}
+          </p>
+        </div>
+      </div>
 
-        </td>
-      </tr>
-    </table>
+      <div style="background:#f9fafb;border-top:0.5px solid #e5e7eb;padding:20px 40px;text-align:center;">
+        <p style="font-size:12px;color:#9ca3af;margin:0;">© 2025 PromptIQ. All rights reserved.</p>
+      </div>
 
+    </div>
   </div>`,
     });
 
@@ -109,29 +103,21 @@ export async function verifyEmail(req, res) {
     const user = await userModel.findOne({ email: decode.email });
 
     if (!user) {
-      return res.status(400).json({
-        message: "Invalid Token",
-        success: false,
-        err: "User not Found",
-      });
+      return res.redirect(
+        "https://promptiq-ekow.onrender.com/verify-email?status=error",
+      );
     }
 
     user.verified = true;
     await user.save();
 
-    const html = `
-  <h1>Email Verified Successfully</h1>
-    <p>Your Email has been verifed.You can now log in to your account</p>
-    <a href="https://promptiq-ekow.onrender.com/login">Go to Login</a>
-  `;
-
-    return res.send(html);
+    return res.redirect(
+      "https://promptiq-ekow.onrender.com/verify-email?status=success",
+    ); // ✅
   } catch (error) {
-    return res.status(400).json({
-      message: "Invalid Token",
-      success: false,
-      error: error.message,
-    });
+    return res.redirect(
+      "https://promptiq-ekow.onrender.com/verify-email?status=error",
+    ); // ❌
   }
 }
 
