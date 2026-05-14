@@ -36,7 +36,7 @@ export async function getMe() {
     const responce = await api.get("/api/auth/get-me");
     return responce.data;
   } catch (error) {
-    throw error;
+    // throw error;
   }
 }
 

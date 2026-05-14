@@ -1,11 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import Loading from './Loading'
 const PublicProtected = ({children}) => {
 const {user ,loading} = useSelector(state=>state.auth)
 
 if(loading){
-    return <h1>Loading..</h1>
+    return <Loading/>
 }
 
 if(!loading && user){

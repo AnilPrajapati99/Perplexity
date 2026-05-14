@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 
 const Register = () => {
- const {loading} =  useSelector(state=>state.auth)
+ const {loading,error} =  useSelector(state=>state.auth)
   const {handleRegister} = useAuth()
   const [formData, setFormData] = useState({
     username: '',
@@ -40,18 +40,12 @@ const Register = () => {
           </div>
 
           {/* Error Message */}
-          {/* {error && (
+
+          {error && (
             <div className="mb-6 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
               {error}
             </div>
-          )} */}
-
-          {/* Success Message */}
-          {/* {success && (
-            <div className="mb-6 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 text-sm">
-              {success}
-            </div>
-          )} */}
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmitForm} className="space-y-5">

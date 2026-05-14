@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { registerUser, loginUser, getMe, logOut } from "../service/auth.api";
 import { setUser, setError, setLoading, setClear } from "../auth.slice";
+import { setErrorWithTimeout } from "../auth.slice";
 
 export function useAuth() {
   const dispatch = useDispatch();
@@ -10,7 +11,9 @@ export function useAuth() {
       const data = await registerUser({ email, username, password });
     } catch (error) {
       dispatch(
-        setError(error.response?.data?.message || "Registration Failed"),
+        setErrorWithTimeout(
+          error.response?.data?.message || "Registration Failed",
+        ),
       );
     } finally {
       dispatch(setLoading(false));
@@ -24,7 +27,7 @@ export function useAuth() {
       dispatch(setUser(data.user));
     } catch (error) {
       dispatch(
-        setError(error.response?.data?.message || "Registration Failed"),
+        setErrorWithTimeout(error.response?.data?.message || "login Failed"),
       );
     } finally {
       dispatch(setLoading(false));
@@ -37,9 +40,7 @@ export function useAuth() {
       const data = await getMe();
       dispatch(setUser(data.user));
     } catch (error) {
-      dispatch(
-        setError(error.response?.data?.message || "Registration Failed"),
-      );
+      // dispatch(setError(error.response?.data?.message || "User not Found"));
     } finally {
       dispatch(setLoading(false));
     }

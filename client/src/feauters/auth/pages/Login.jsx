@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 const Login = () => {
-const {user,loading} = useSelector(state=>state.auth)
+const {user,loading,error} = useSelector(state=>state.auth)
+
+console.log(error)
+
   const {handleLogin} = useAuth()
   const [formData, setFormData] = useState({
     email: '',
@@ -48,11 +51,11 @@ const {user,loading} = useSelector(state=>state.auth)
           </div>
 
           {/* Error Message */}
-          {/* {error && (
+          {error && (
             <div className="mb-6 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
               {error}
             </div>
-          )} */}
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmitForm} className="space-y-5">
