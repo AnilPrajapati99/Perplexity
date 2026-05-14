@@ -5,14 +5,6 @@ import { sendEmail } from "../services/mail.service.js";
 export async function handleRegister(req, res) {
   try {
     console.log("controller");
-
-    console.log("ENV CHECK:", {
-      user: process.env.GOOGLE_USER ? "✓" : "✗ MISSING",
-      clientId: process.env.GOOGLE_CLIENT_ID ? "✓" : "✗ MISSING",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ? "✓" : "✗ MISSING",
-      refreshToken: process.env.GOOGLE_REFRESH_TOKEN ? "✓" : "✗ MISSING",
-    });
-
     const { username, email, password } = req.body;
 
     const isUseralreadyExits = await userModel.findOne({
@@ -130,7 +122,7 @@ export async function verifyEmail(req, res) {
     const html = `
   <h1>Email Verified Successfully</h1>
     <p>Your Email has been verifed.You can now log in to your account</p>
-    <a href="https://promptiq-ekow.onrender.com/api/auth/login">Go to Login</a>
+    <a href="https://promptiq-ekow.onrender.com/login">Go to Login</a>
   `;
 
     return res.send(html);

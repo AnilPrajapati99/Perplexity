@@ -2,40 +2,25 @@ import "dotenv/config";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
   auth: {
-    type: "OAuth2",
-    user: process.env.GOOGLE_USER,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-    clientId: process.env.GOOGLE_CLIENT_ID,
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
   },
 });
 
-console.log({
-  user: process.env.GOOGLE_USER,
-  clientId: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET ? "✓ set" : "✗ missing",
-  refreshToken: process.env.GOOGLE_REFRESH_TOKEN ? "✓ set" : "✗ missing",
-});
-
-transporter
-  .verify()
-  .then(() => {
-    console.log("Email tranporter is ready to send email");
-  })
-  .catch((err) => {
-    console.error("Email transporter verification failed", err.message);
-  });
+console.log(process.env.BREVO_USER);
 
 export async function sendEmail({ to, subject, html, text }) {
-  const mailOption = {
-    from: process.env.GOOGLE_USER,
+  console.log(to);
+  const details = await transporter.sendMail({
+    from: `"PromptIQ" <${process.env.BREVO_SENDER}>`,
     to,
     subject,
     html,
     text,
-  };
-  const details = await transporter.sendMail(mailOption);
-  console.log("Email details", details);
+  });
+  console.log("Email sent:", details.messageId);
 }
