@@ -36,6 +36,13 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use("/api/auth", authRouter);
 app.use("/api/chats", chatRouter);
 
+app.get("api/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+  });
+  console.log("done");
+});
+
 //  React Static Files
 
 app.get("{*path}", (req, res) => {

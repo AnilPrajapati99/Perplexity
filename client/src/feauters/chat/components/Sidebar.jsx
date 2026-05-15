@@ -12,9 +12,8 @@ const Sidebar = ({openChat,handleNewchat}) => {
     const {showSidebar,activeTab,chats} = useSelector(state=>state.chat)
     const dispatch = useDispatch()
 
-    async function deleteChat(e,chatid){
+    async function deleteChat(e,chatid){ 
        e.stopPropagation();
-      console.log("log",chatid)
       try {
         await handleDelete(chatid)
         dispatch(deletechats(chatid))
