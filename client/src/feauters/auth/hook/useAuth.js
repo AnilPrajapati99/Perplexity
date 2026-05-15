@@ -34,10 +34,12 @@ export function useAuth() {
       dispatch(setAuthLoading(true));
       const data = await loginUser({ email, password });
       dispatch(setUser(data.user));
+      return true;
     } catch (error) {
       dispatch(
         setErrorWithTimeout(error.response?.data?.message || "login Failed"),
       );
+      return false;
     } finally {
       dispatch(setAuthLoading(false));
     }

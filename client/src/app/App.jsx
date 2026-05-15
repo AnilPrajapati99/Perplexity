@@ -3,7 +3,8 @@ import { router } from "./app.routes.jsx"
 import { useAuth } from "../feauters/auth/hook/useAuth.js"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { WithSuspense } from "./components/WithSuspense.jsx"
+import Loading from "../feauters/auth/components/Loading.jsx"
+
 function App() {
   const {handleGetMee} = useAuth()
 
@@ -12,9 +13,9 @@ function App() {
   },[])
 
   return (
-    <WithSuspense>
-    <RouterProvider router={router} />
-    </WithSuspense>
+  
+    <RouterProvider router={router}  fallbackElement={<Loading />} />
+  
 
   )
 }

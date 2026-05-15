@@ -30,8 +30,10 @@ console.log(error)
   const handleSubmitForm = async (e) => {
     e.preventDefault()
     console.log(formData)
-    await handleLogin(formData)
+    const success = await handleLogin(formData)
+    if(success){
     navigate("/")
+    }
   }
 
 

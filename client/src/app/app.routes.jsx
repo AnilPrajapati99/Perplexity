@@ -13,18 +13,24 @@ export const router = createBrowserRouter([
   {
     path:"/",
     element:  <Protected>
-     <Dashboard/>
+     <WithSuspense>
+     <Dashboard />
+  </WithSuspense>
     </Protected>  
   },
   {
     path: "/login",
     element:  <PublicProtected>
- <Login />
+ <WithSuspense>
+        <Login />
+      </WithSuspense>
     </PublicProtected>,
   },
   {
     path: "/register",
-    element: <PublicProtected><Register /></PublicProtected>,
+    element: <PublicProtected><WithSuspense>
+        <Register />
+      </WithSuspense></PublicProtected>,
   },
   {
     path:"/verify-email",
