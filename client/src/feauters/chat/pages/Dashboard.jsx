@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Send } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { useChat } from '../hooks/useChat'
-import { MarkdownRenderer } from './MarkdownRenderer'
+const MarkdownRenderer = lazy(()=>import("./MarkdownRenderer"))
 import { setEmptyChat } from '../chat.slice'
 import { useDispatch } from 'react-redux'
 import { ArrowRightToLine } from 'lucide-react';
@@ -114,7 +114,9 @@ function handleNewchat() {
               </h2>
             ) : (
               <div className='w-full  min-w-0'>
-                <MarkdownRenderer content={message.content} />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <MarkdownRenderer content={message.content} />
+                </Suspense>
               </div>
             )}
           </div>

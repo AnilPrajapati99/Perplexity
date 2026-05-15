@@ -1,16 +1,18 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../feauters/auth/pages/Login";
-import Register from "../feauters/auth/pages/Register";
-import Dashboard from "../feauters/chat/pages/Dashboard";
+const Dashboard = lazy(()=>import("../feauters/chat/pages/Dashboard")) ;
+const Login = lazy(()=>import("../feauters/auth/pages/Login")) ;
+const Register = lazy(()=>import("../feauters/auth/pages/Register")) ;
 import Protected from "../feauters/auth/components/Protected";
 import PublicProtected from "../feauters/auth/components/PublicProtected";
-import VerifyEmail from "../feauters/auth/components/VerifyEmail";
+const VerifyEmail = lazy(()=>import("../feauters/auth/components/VerifyEmail"))
+import { WithSuspense } from "./components/WithSuspense";
 
 export const router = createBrowserRouter([
   {
     path:"/",
     element:  <Protected>
-      <Dashboard/>
+     <Dashboard/>
     </Protected>  
   },
   {

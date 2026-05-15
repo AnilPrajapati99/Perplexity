@@ -32,15 +32,12 @@ console.log(error)
     navigate("/")
   }
 
-// if(!loading && user){
-//   return <Navigate to="/"  replace/>
-// }
 
 
   return (
     <div style={{height:"100dvh"}} className="relative h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
       <div className='grid-bg'></div>
-      <div className="w-full max-w-md">
+      <div className=" w-full max-w-md">
         <div className="bg-slate-850 rounded-lg shadow-2xl p-8 border border-slate-700">
           {/* Header */}
           <div className="text-center mb-8">

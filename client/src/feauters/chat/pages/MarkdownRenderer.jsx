@@ -1,31 +1,23 @@
-/**
- * MarkdownRenderer.jsx
- *
- * Drop-in replacement for your ReactMarkdown block.
- * ✅ Beautiful text typography (h1–h4, p, lists, blockquote, strong, em)
- * ✅ VS Code colourful syntax highlighting + line numbers + copy button
- * ✅ Styled tables with zebra rows
- * ✅ Uses inline styles → zero Tailwind / CSS conflicts
- *
- * USAGE in your chat component:
- *   import MarkdownRenderer from "./MarkdownRenderer";
- *
- *   // ❌ Remove prose classes – they fight with these styles:
- *   // <div className='prose prose-sm w-180 text-white'>
- *
- *   // ✅ Use this instead:
- *   <div style={{ maxWidth: 720 }}>
- *     <MarkdownRenderer content={message.content} />
- *   </div>
- *
- * Install deps (if not yet):
- *   npm install react-syntax-highlighter remark-gfm
- */
-
 import { useState } from "react";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import vscDarkPlus from "react-syntax-highlighter/dist/esm/styles/hljs/vs2015";
+
+// Sirf jo languages chahiye vo register karo
+import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
+import python from "react-syntax-highlighter/dist/esm/languages/hljs/python";
+import ts from "react-syntax-highlighter/dist/esm/languages/hljs/typescript";
+import css from "react-syntax-highlighter/dist/esm/languages/hljs/css";
+import bash from "react-syntax-highlighter/dist/esm/languages/hljs/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
+
+SyntaxHighlighter.registerLanguage("javascript", js);
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("typescript", ts);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -36,7 +28,7 @@ const T = {
     fontFamily: "'Inter',sans-serif",
     fontSize: "14.5px",
     lineHeight: 1.8,
-    color: "#fffff",
+    color: "#ffffff",
     wordBreak: "break-word",
   },
   h1: {
@@ -45,7 +37,7 @@ const T = {
     borderBottom: "1px solid #30363d", letterSpacing: "-0.02em",
   },
   h2: {
-    fontSize: "1.1rem", fontWeight: 650, color: "#e2e8f0",
+    fontSize: "1.1rem", fontWeight: 600, color: "#e2e8f0",
     lineHeight: 1.35, margin: "1.75rem 0 0.55rem", paddingBottom: "0.28rem",
     borderBottom: "1px solid #21262d", letterSpacing: "-0.01em",
   },
@@ -60,7 +52,7 @@ const T = {
   },
   p: {
     margin: "0 0 0.8rem", fontSize: "1rem",
-    lineHeight: 1.82, color: "#fffff",
+    lineHeight: 1.82, color: "ffffff",
   },
   hr: { border: "none", borderTop: "1px solid #21262d", margin: "1.2rem 0" },
   blockquote: {
@@ -79,8 +71,8 @@ const T = {
     listStyleType: "decimal",
     display: "flex", flexDirection: "column", gap: "0.22rem",
   },
-  li: { fontSize: "1rem", lineHeight: 1.75, color: "#fffff" },
-  strong: { color: "#f0f6fc", fontWeight: 650 },
+  li: { fontSize: "1rem", lineHeight: 1.75, color: "#ffffff" },
+  strong: { color: "#f0f6fc", fontWeight: 600 },
   em: { color: "#a78bfa", fontStyle: "italic" },
 
   // inline code
@@ -98,9 +90,8 @@ maxWidth: "100%",
 
   // code block
 codeWrap: {
-  overflowWrap: "break-word",     // "pre" nahi, "pre-wrap" chahiye
   borderRadius: "8px",
-  overflow: "hidden",          // "hidden" se "auto" karo scroll ke liye
+  overflow: "hidden",
   border: "1px solid #30363d",
   margin: "0.85rem 0",
 },

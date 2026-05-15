@@ -11,7 +11,6 @@
     "deploy": "vite build && rmdir /S /Q ..\\server\\public && xcopy /E /I /Y dist ..\\server\\public\\"
   },
   "dependencies": {
-    "@lottiefiles/dotlottie-react": "^0.19.1",
     "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.4",
     "axios": "^1.16.0",

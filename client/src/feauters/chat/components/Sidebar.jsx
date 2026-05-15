@@ -12,8 +12,9 @@ const Sidebar = ({openChat,handleNewchat}) => {
     const {showSidebar,activeTab,chats} = useSelector(state=>state.chat)
     const dispatch = useDispatch()
 
-    async function deleteChat(e,chatid){ 
+    async function deleteChat(e,chatid){
        e.stopPropagation();
+      console.log("log",chatid)
       try {
         await handleDelete(chatid)
         dispatch(deletechats(chatid))
@@ -61,7 +62,7 @@ const Sidebar = ({openChat,handleNewchat}) => {
         {Object.values(chats).map((chat, index) => (
         <div
           onClick={() => openChat(chat._id, chat.title)}
-          key={index}
+          key={chat._id}
           className={`w-full flex justify-between cursor-pointer px-4 py-3 text-left rounded-lg text-white text-sm transition-colors duration-200  border border-neutral-600 shrink-0
             ${activeTab === chat.title ? "bg-neutral-500" : "bg-neutral-700"}`}
         >
