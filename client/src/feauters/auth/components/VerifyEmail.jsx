@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const status = searchParams.get("status"); // ← "success" ya "error" direct milega
+  const status = searchParams.get("status"); 
 
   return (
     <div style={{ minHeight: "100vh", background: "#f4f6fb", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 16px" }}>

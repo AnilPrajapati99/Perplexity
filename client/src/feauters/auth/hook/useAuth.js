@@ -1,28 +1,37 @@
 import { useDispatch } from "react-redux";
 import { registerUser, loginUser, getMe, logOut } from "../service/auth.api";
-import { setUser, setError, setLoading, setClear } from "../auth.slice";
+import {
+  setUser,
+  setError,
+  setAuthLoading,
+  setCheckingAuth,
+  setClear,
+} from "../auth.slice";
 import { setErrorWithTimeout } from "../auth.slice";
+import { Heading1 } from "lucide-react";
 
 export function useAuth() {
   const dispatch = useDispatch();
   async function handleRegister({ email, username, password }) {
     try {
-      dispatch(setLoading(true));
+      dispatch(setAuthLoading(true));
       const data = await registerUser({ email, username, password });
+      return true;
     } catch (error) {
       dispatch(
         setErrorWithTimeout(
           error.response?.data?.message || "Registration Failed",
         ),
       );
+      return false;
     } finally {
-      dispatch(setLoading(false));
+      dispatch(setAuthLoading(false));
     }
   }
 
   async function handleLogin({ email, password }) {
     try {
-      dispatch(setLoading(true));
+      dispatch(setAuthLoading(true));
       const data = await loginUser({ email, password });
       dispatch(setUser(data.user));
     } catch (error) {
@@ -30,28 +39,27 @@ export function useAuth() {
         setErrorWithTimeout(error.response?.data?.message || "login Failed"),
       );
     } finally {
-      dispatch(setLoading(false));
+      dispatch(setAuthLoading(false));
     }
   }
 
   async function handleGetMee() {
     try {
-      dispatch(setLoading(true));
       const data = await getMe();
       dispatch(setUser(data.user));
     } catch (error) {
-      // dispatch(setError(error.response?.data?.message || "User not Found"));
+      dispatch(setUser(null));
     } finally {
-      dispatch(setLoading(false));
+      dispatch(setCheckingAuth(false));
     }
   }
 
   async function handleLogout() {
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
     await logOut();
     dispatch(setClear());
     console.log("hook");
-    dispatch(setLoading(false));
+    // dispatch(setLoading(false));
   }
 
   return {

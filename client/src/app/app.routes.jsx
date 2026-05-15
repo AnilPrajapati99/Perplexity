@@ -7,6 +7,7 @@ import Protected from "../feauters/auth/components/Protected";
 import PublicProtected from "../feauters/auth/components/PublicProtected";
 const VerifyEmail = lazy(()=>import("../feauters/auth/components/VerifyEmail"))
 import { WithSuspense } from "./components/WithSuspense";
+const EmailSent = lazy(()=>import("../feauters/auth/components/EmailSent"));
 
 export const router = createBrowserRouter([
   {
@@ -28,5 +29,9 @@ export const router = createBrowserRouter([
   {
     path:"/verify-email",
     element:<VerifyEmail/>
+  },
+  {
+    path:"/email-sent",
+    element:<EmailSent/>
   }
 ]);

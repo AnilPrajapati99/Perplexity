@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 const Login = () => {
-const {user,loading,error} = useSelector(state=>state.auth)
+const {user,authLoading,error} = useSelector(state=>state.auth)
+
+console.log(authLoading)
 
 console.log(error)
 
@@ -100,10 +102,10 @@ console.log(error)
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 disabled:scale-100"
+              disabled={authLoading}
+              className="w-full cursor-pointer py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 disabled:scale-100"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {authLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 

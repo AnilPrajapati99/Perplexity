@@ -1,18 +1,23 @@
 import { useState } from 'react'
 import { useAuth } from '../hook/useAuth'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 
 const Register = () => {
- const {loading,error} =  useSelector(state=>state.auth)
+ const {error} =  useSelector(state=>state.auth)
+ const [localLoading, setLocalLoading] = useState(false);
   const {handleRegister} = useAuth()
+  const [status, setStatus] = useState();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   })
 
+  const navigate = useNavigate()
 
+console.log(status)
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -21,10 +26,28 @@ const Register = () => {
     }))
   }
 
-  const handleSubmitForm = async (e) => {
-    e.preventDefault()
-    await handleRegister(formData)
+const handleSubmitForm = async (e) => {
+  e.preventDefault();
+
+  try {
+    setLocalLoading(true);
+
+    const success = await handleRegister(formData);
+
+    console.log(success);
+
+    if (success) {
+      navigate("/email-sent", {
+        state: { email: formData.email },
+      });
+    }
+
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setLocalLoading(false);
   }
+};
 
   return (
     <div style={{height:"100dvh"}} className="h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-8">
@@ -46,7 +69,6 @@ const Register = () => {
               {error}
             </div>
           )}
-
           {/* Form */}
           <form onSubmit={handleSubmitForm} className="space-y-5">
             {/* Username Field */}
@@ -98,7 +120,7 @@ const Register = () => {
                 required
                 className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all"
               />
-              <p className="text-xs text-slate-400 mt-1">Minimum 6 characters</p>
+              <p className="text-xs text-slate-400 mt-1">Minimum 6 characters : Trump@123</p>
             </div>
 
             {/* Terms Agreement */}
@@ -118,13 +140,13 @@ const Register = () => {
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 disabled:scale-100"
-            >
-              {loading ? 'Creating Account...' : 'Sign Up'}
-            </button>
+           <button
+  type="submit"
+  disabled={localLoading || status === "success"} // ← success pe bhi disable
+  className="w-full py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 disabled:scale-100"
+>
+  {localLoading ? 'Creating Account...' : status === "success" ? "✓ Done!" : 'Sign Up'}
+</button>
           </form>
 
           {/* Login Link */}

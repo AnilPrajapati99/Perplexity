@@ -18,7 +18,7 @@ export const registerValidationRules = [
     .normalizeEmail(),
 
   body("password")
-    .isLength({ min: 8 })
+    .isLength({ min: 6 })
     .withMessage("Password must be at least 8 characters long")
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/)
     .withMessage(

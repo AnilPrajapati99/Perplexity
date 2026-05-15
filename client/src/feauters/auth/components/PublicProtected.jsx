@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import Loading from './Loading'
 const PublicProtected = ({children}) => {
-const {user ,loading} = useSelector(state=>state.auth)
+const {user , authLoading} = useSelector(state=>state.auth)
 
-if(loading){
-    return <Loading/>
-}
+// if(authLoading){
+//     return <Loading/>
+// }
 
-if(!loading && user){
+if( user){
     return <Navigate to="/" />
 }
 

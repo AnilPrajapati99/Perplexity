@@ -6,10 +6,9 @@ import Loading from './Loading'
 
 const Protected = ({children}) => {
     const {user }= useSelector(state=>state.auth)
-    const {loading }= useSelector(state=>state.auth)
-    console.log(loading)
+    const {checkingAuth }= useSelector(state=>state.auth)
 
-    if(loading){
+    if(checkingAuth){
       return <Loading/>
     }
     if(!user){

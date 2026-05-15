@@ -4,15 +4,21 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
-    loading: true,
+    checkingAuth: true,
+    authLoading: false,
     error: null,
   },
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
+
+    setCheckingAuth: (state, action) => {
+      state.checkingAuth = action.payload;
+    },
+
+    setAuthLoading: (state, action) => {
+      state.authLoading = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -35,7 +41,13 @@ export function setErrorWithTimeout(message) {
   };
 }
 
-export const { setError, setLoading, setUser, setClear, clearError } =
-  authSlice.actions;
+export const {
+  setError,
+  setAuthLoading,
+  setCheckingAuth,
+  setUser,
+  setClear,
+  clearError,
+} = authSlice.actions;
 
 export default authSlice.reducer;
